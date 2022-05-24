@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Alamofire
+
 
 class CoursesViewController: UITableViewController {
     private var courses: [Course] = []
@@ -117,12 +119,36 @@ class CoursesViewController: UITableViewController {
         URLSession.shared.dataTask(with: url) { data, _, _ in
             guard let data = data else { return }
             do {
-                self.courses = try JSONDecoder().decode([Course].self, from: data)
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                self.courses = try decoder.decode([Course].self, from: data)
                
             } catch let error {
                 print(error)
             }
             
         }.resume()
+    }
+    
+    func fetchDataWithAlamofire() {
+        guard let url = URL(string: jsonUrlTwo) else { return }
+        
+        
+        
+        AF.request(url).validate().responseJSON { dataResponse in
+            
+            switch dataResponse.result {
+            case .success(let value):
+                self.courses = Course.getCourses(from: value)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+            case.failure(let error):
+                print(error)
+            }
+            
+        }
+        
     }
 }

@@ -18,8 +18,8 @@ class CourseCell: UITableViewCell {
 
     func configure(with course: Course) {
         courseNameLable.text = course.name
-        numberOfLessons.text = "Number of lessons: \(course.number_of_lessons)"
-        numberOfTests.text = "Number of tests: \(course.number_of_tests)"
+        numberOfLessons.text = "Number of lessons: \(course.numberOfLessons)"
+        numberOfTests.text = "Number of tests: \(course.numberOfTests)"
         
         DispatchQueue.global().async {
             

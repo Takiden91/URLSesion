@@ -14,6 +14,8 @@ enum UserActions: String, CaseIterable {
     case exempleThree = "Exemple Three"
     case exempleFour = "Exemple Four"
     case ourCourses = "Our Courses"
+    case postRequest = "Post Request"
+    case ourCoursesAlamofire = "Our Courses Alamofire"
 }
 
 
@@ -45,7 +47,6 @@ class MainViewController: UICollectionViewController {
         switch userAction {
         case .downLoadeImage:
             performSegue(withIdentifier: "ShowImage", sender: self)
-            
         case .exempleOne:
             performSegue(withIdentifier: "ExempleOne", sender: self)
         case .exempleTwo:
@@ -56,6 +57,10 @@ class MainViewController: UICollectionViewController {
             performSegue(withIdentifier: "ExempleFour", sender: self)
         case .ourCourses:
             performSegue(withIdentifier: "OurCourses", sender: self)
+        case .postRequest:
+            postRequest()
+        case .ourCoursesAlamofire:
+            performSegue(withIdentifier: "OurCoursesAlamofire", sender: self)
         }
     }
     
@@ -76,6 +81,8 @@ class MainViewController: UICollectionViewController {
                 corsesVC.fetchDataV4()
             case "OurCourses":
                 corsesVC.fetchData()
+            case "OurCoursesAlamofire":
+                corsesVC.fetchDataWithAlamofire()
             default: break
             }
         }
@@ -91,4 +98,34 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     }
 }
     
-
+extension MainViewController {
+    private func postRequest() {
+        guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return }
+        let userData = [
+            "course": "Networking",
+            "lesson": "Get and Post"
+        ]
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: userData, options: []) else { return }
+        request.httpBody = httpBody
+        
+        URLSession.shared.dataTask(with: request) { data, respons, _ in
+            guard let respons = respons, let data = data else { return }
+            print(respons)
+            
+            do {
+                
+                let json = try JSONSerialization.jsonObject(with: data, options: [])
+                print(json)
+                    
+            } catch let error {
+                print(error)
+            }
+            
+        }.resume()
+    }
+}

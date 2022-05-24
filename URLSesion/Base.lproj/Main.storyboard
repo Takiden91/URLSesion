@@ -104,6 +104,7 @@
                         <segue destination="CAX-oi-xPU" kind="show" identifier="ExempleThree" id="JIN-Wc-cQW"/>
                         <segue destination="CAX-oi-xPU" kind="show" identifier="ExempleFour" id="zvL-by-zrK"/>
                         <segue destination="CAX-oi-xPU" kind="show" identifier="OurCourses" id="cQU-Bb-00Z"/>
+                        <segue destination="CAX-oi-xPU" kind="show" identifier="OurCoursesAlamofire" id="Xtf-Zn-5nO"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pSf-VC-jKB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -205,7 +206,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cQU-Bb-00Z"/>
+        <segue reference="Xtf-Zn-5nO"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
